@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผลการแข่งขัน · โรงเรียนบ้านหนองแสง</title>
+<link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://school.nongkhai2.go.th/emis/pic_school/1035430040.jpg">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --or:     #D35230;
+  --or-dk:  #B84020;
+  --or-lt:  #F27344;
+  --or-pale:#FFF0EB;
+  --or-mist:#FFF8F5;
+  --ink:    #1C1410;
+  --ink-2:  #3D2A20;
+  --ink-3:  #7A5C4E;
+  --ink-4:  #B8A099;
+  --line:   rgba(211,82,48,0.12);
+  --line-2: rgba(211,82,48,0.22);
+  --bg:     #FAFAF9;
+  --white:  #FFFFFF;
+  --r:      12px;
+  --r-lg:   18px;
+}
+
+body {
+  font-family: 'K2D', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.hd {
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+.hd-eyebrow {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 14px;
+}
+.hd-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.hd-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--or);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.hd-icon svg { width: 28px; height: 28px; fill: #fff; }
+.hd-title {
+  text-align: left;
+}
+.hd-title h1 {
+  font-size: clamp(1.2rem, 4vw, 1.7rem);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.hd-title h2 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+.hd-meta {
+  font-size: 0.76rem;
+  color: var(--ink-4);
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+}
+
+/* ─── STATS ─── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat {
+  background: var(--white);
+  padding: 1.4rem 1rem;
+  text-align: center;
+}
+.stat-n {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--or);
+}
+.stat-n.dk { color: var(--or-dk); }
+.stat-n.lt { color: var(--or-lt); }
+.stat-l {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+/* ─── TABS ─── */
+.tabs-bar {
+  display: flex;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 0 1rem;
+  gap: 0;
+}
+.tb {
+  flex: 1;
+  padding: 14px 8px 12px;
+  border: none;
+  background: transparent;
+  font-family: 'K2D', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tb.active {
+  color: var(--or);
+  border-bottom-color: var(--or);
+}
+.tb-sub {
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+/* ─── BODY ─── */
+.body {
+  padding: 1rem;
+  max-width: 100%;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ─── SECTION LABEL ─── */
+.sec {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 10px;
+}
+.sec-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sec-dot.d-or  { background: var(--or); }
+.sec-dot.d-lt  { background: var(--or-lt); }
+.sec-dot.d-gr  { background: var(--ink-4); }
+.sec-lbl {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.sec-rule { flex: 1; height: 1px; background: var(--line); }
+
+/* ─── CARD ─── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 18px 18px 16px 22px;
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.card:hover {
+  border-color: var(--line-2);
+  box-shadow: 0 4px 20px rgba(211,82,48,0.07);
+}
+.card.hi {
+  background: var(--or-mist);
+  border-color: rgba(211,82,48,0.2);
+}
+.bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+}
+.bar.b1 { background: var(--or); }
+.bar.b2 { background: var(--or-lt); }
+.bar.b3 { background: var(--line-2); }
+.bar.b4 { background: #D8D0CB; }
+
+.c-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.c-code {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--or);
+  background: var(--or-pale);
+  border-radius: 6px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.c-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.c-cat {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-top: 3px;
+}
+
+.c-mid {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tag-or   { background: var(--or-pale); color: var(--or-dk); }
+.tag-hi   { background: var(--or); color: #fff; }
+.tag-gray { background: #F0EEEC; color: var(--ink-3); }
+.tag-rep  {
+  margin-left: auto;
+  background: var(--or-dk);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.c-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.c-score-lbl {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--ink-4);
+  min-width: 34px;
+}
+.c-score-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(211,82,48,0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.c-score-fill {
+  height: 100%;
+  border-radius: 100px;
+  width: 0%;
+  background: var(--or);
+  transition: width 1s cubic-bezier(.4,0,.2,1);
+}
+.c-score-fill.z { background: #D5CEC9; }
+.c-score-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink-2);
+  min-width: 42px;
+  text-align: right;
+  letter-spacing: -0.01em;
+}
+
+/* ─── FOOTER ─── */
+.ft {
+  text-align: center;
+  padding: 1.2rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink-4);
+  border-top: 1px solid var(--line);
+  background: var(--white);
+  letter-spacing: 0.03em;
+}
+
+/* ─── ANIM ─── */
+@keyframes up {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.card { animation: up 0.28s ease both; }
+.card:nth-child(1){animation-delay:.03s}
+.card:nth-child(2){animation-delay:.07s}
+.card:nth-child(3){animation-delay:.11s}
+.card:nth-child(4){animation-delay:.15s}
+.card:nth-child(5){animation-delay:.19s}
+.card:nth-child(6){animation-delay:.23s}
+.card:nth-child(7){animation-delay:.27s}
+.card:nth-child(8){animation-delay:.31s}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hd">
+  <div class="hd-eyebrow">การแข่งขันศิลปหัตถกรรมนักเรียน ครั้งที่ 73</div>
+  <div><img src="NongsangSchool-LOGO1-ver.png" style="width:350px; height:=auto"></img></div>
+  <div class="hd-logo">
+    <div class="hd-icon">
+      <!-- school/award icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+      </svg>
+    </div>
+    <div class="hd-title">
+      <h1>โรงเรียนบ้านหนองแสง</h1>
+      <h2>สรุปผลการแข่งขันทั้งหมด</h2>
+	      </div>
+  </div>
+  <div class="hd-meta">รหัส 1035430040 &nbsp;·&nbsp; สพป.ยโสธร เขต 1 &nbsp;·&nbsp; ปีงบประมาณ พ.ศ. 2569
+  <h2 class="tb-sub">🏅<a href="certificate-students.pdf/preview" target="_blank">ใบประกาศนักเรียน ปี 2569</a></h2>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-n lt">10</div>
+    <div class="stat-l">รายการแข่งขัน<br>ทั้งหมด</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">9</div>
+    <div class="stat-l">เหรียญทอง<br>ที่ได้รับ</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n dk">2</div>
+    <div class="stat-l">ตัวแทน<br>ระดับเครือข่าย</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tb active" onclick="sw('net',this)">
+    ระดับเครือข่าย
+    <span class="tb-sub">8 รายการ</span>
+  </button>
+  <button class="tb" onclick="sw('dist',this)">
+    ระดับเขตพื้นที่
+    <span class="tb-sub">2 รายการ</span>
+  </button>
+</div>
+
+<!-- PANELS -->
+<div class="body">
+
+  <!-- NETWORK -->
+  <div class="panel active" id="panel-net">
+
+    <div class="sec">
+      <span class="sec-dot d-or"></span>
+      <span class="sec-lbl">ชนะเลิศ · ตัวแทน</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="card hi">
+      <div class="bar b1"></div>
+      <div class="c-top">
+        <span class="c-code">0654</span>
+        <div>
+          <div class="c-name">การแข่งขันเดี่ยวดนตรีพื้นเมือง เดี่ยวพิณ ป.1–ป.6</div>
+          <div class="c-cat">ศิลปวัฒนธรรมอีสาน</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-hi">ชนะเลิศ อันดับ 1</span>
+        <span class="tag tag-rep">ตัวแทน ↗</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="80"></div></div>
+        <span class="c-score-val">80.00</span>
+      </div>
+    </div>
+
+    <div class="card hi">
+      <div class="bar b1"></div>
+      <div class="c-top">
+        <span class="c-code">1242</span>
+        <div>
+          <div class="c-name">การแข่งขันทำอาหารคาวหวานเพื่อสุขภาพเชิงธุรกิจ ป.4–ป.6</div>
+          <div class="c-cat">การงานอาชีพ</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-hi">ชนะเลิศ อันดับ 1</span>
+        <span class="tag tag-rep">ตัวแทน ↗</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="80"></div></div>
+        <span class="c-score-val">80.00</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-dot d-lt"></span>
+      <span class="sec-lbl">รองชนะเลิศ</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="card">
+      <div class="bar b2"></div>
+      <div class="c-top">
+        <span class="c-code">0001</span>
+        <div>
+          <div class="c-name">การแข่งขันประดิษฐ์ของใช้จากวัสดุธรรมชาติในท้องถิ่น ป.4–ป.6</div>
+          <div class="c-cat">การงานอาชีพ</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">รองชนะเลิศ อันดับ 1</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="82"></div></div>
+        <span class="c-score-val">82.00</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-dot d-gr"></span>
+      <span class="sec-lbl">เหรียญทอง · เข้าร่วม</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">0268</span>
+        <div>
+          <div class="c-name">การแข่งขันการวาดภาพระบายสี ป.1–ป.3</div>
+          <div class="c-cat">ทัศนศิลป์</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 4</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="91"></div></div>
+        <span class="c-score-val">91.00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">0311</span>
+        <div>
+          <div class="c-name">การแข่งขันประติมากรรม ป.1–ป.3</div>
+          <div class="c-cat">ทัศนศิลป์</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 6</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="90"></div></div>
+        <span class="c-score-val">90.00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">0269</span>
+        <div>
+          <div class="c-name">การแข่งขันการวาดภาพระบายสี ป.4–ป.6</div>
+          <div class="c-cat">ทัศนศิลป์</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 5</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="89"></div></div>
+        <span class="c-score-val">89.00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">0703</span>
+        <div>
+          <div class="c-name">การสร้างภาพด้วยการฉีก ตัด ปะ กระดาษ ปฐมวัย</div>
+          <div class="c-cat">ปฐมวัย</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 9</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="83"></div></div>
+        <span class="c-score-val">83.00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">0736</span>
+        <div>
+          <div class="c-name">การแข่งขันขับร้องเพลงไทยลูกกรุง ประเภทหญิง ป.1–ป.6</div>
+          <div class="c-cat">ดนตรี</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 4</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="80"></div></div>
+        <span class="c-score-val">80.00</span>
+      </div>
+    </div>
+
+  </div><!-- /net -->
+
+  <!-- DISTRICT -->
+  <div class="panel" id="panel-dist">
+
+    <div class="sec">
+      <span class="sec-dot d-or"></span>
+      <span class="sec-lbl">เหรียญทอง</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="card">
+      <div class="bar b3"></div>
+      <div class="c-top">
+        <span class="c-code">1242</span>
+        <div>
+          <div class="c-name">การแข่งขันทำอาหารคาวหวานเพื่อสุขภาพเชิงธุรกิจ ป.4–ป.6</div>
+          <div class="c-cat">การงานอาชีพ</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-or">🥇 เหรียญทอง</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 5</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill" data-v="86"></div></div>
+        <span class="c-score-val">86.00</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-dot d-gr"></span>
+      <span class="sec-lbl">เข้าร่วมการแข่งขัน</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="card">
+      <div class="bar b4"></div>
+      <div class="c-top">
+        <span class="c-code">0654</span>
+        <div>
+          <div class="c-name">การแข่งขันเดี่ยวดนตรีพื้นเมือง เดี่ยวพิณ ป.1–ป.6</div>
+          <div class="c-cat">ศิลปวัฒนธรรมอีสาน</div>
+        </div>
+      </div>
+      <div class="c-mid">
+        <span class="tag tag-gray">— ไม่มีเหรียญ</span>
+        <span class="tag tag-gray">เข้าร่วม · อันดับ 10</span>
+      </div>
+      <div class="c-score">
+        <span class="c-score-lbl">คะแนน</span>
+        <div class="c-score-track"><div class="c-score-fill z" data-v="0"></div></div>
+        <span class="c-score-val" style="color:var(--ink-4)">0.00</span>
+      </div>
+    </div>
+
+  </div><!-- /dist -->
+
+</div><!-- /body -->
+
+<footer class="ft">
+  KPA COMPET V.3.0 &nbsp;·&nbsp; สพป.ยโสธร เขต 1 &nbsp;·&nbsp; ปีงบประมาณ พ.ศ. 2569
+</footer>
+
+<script>
+function sw(id, btn) {
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = document.getElementById('panel-' + id);
+  panel.classList.add('active');
+  panel.querySelectorAll('.card').forEach((c, i) => {
+    c.style.animation = 'none';
+    c.offsetHeight;
+    c.style.animation = 'up 0.26s ease ' + (i * 0.045) + 's both';
+  });
+  setTimeout(bars, 40);
+}
+function bars() {
+  document.querySelectorAll('.panel.active .c-score-fill').forEach(f => {
+    const v = parseFloat(f.dataset.v) || 0;
+    f.style.width = '0%';
+    requestAnimationFrame(() => requestAnimationFrame(() => { f.style.width = v + '%'; }));
+  });
+}
+window.addEventListener('load', () => setTimeout(bars, 250));
+</script>
+</body>
+</html>
